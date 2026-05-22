@@ -1,0 +1,13 @@
+<h1> Results of Prediction </h1>
+
+<body>
+    <h2>Prediction Result</h2>
+
+    {% if prediction %}
+        <p>{{ prediction }}</p>
+    {% else %}
+        <p>Error: No prediction received.</p>
+    {% endif %}
+
+    <a href="/">Go back</a>
+</body>
