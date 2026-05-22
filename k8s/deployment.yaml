@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: car-co2-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: car-co2-app
+  template:
+    metadata:
+      labels:
+        app: car-co2-app
+    spec:
+      containers:
+        - name: car-co2-app
+          image: sumanth1204/car-co2:latest
+          ports:
+            - containerPort: 5000
+

@@ -1,0 +1,36 @@
+name: Continuous Training
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r app/requirements.txt
+
+      - name: Run Retraining Script
+        run: python app/train.py
+
+      - name: Commit Updated Model
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add model.pkl best_accuracy.txt || true
+          git commit -m "bot: update model if improved" || echo "No changes"
+          git push || true

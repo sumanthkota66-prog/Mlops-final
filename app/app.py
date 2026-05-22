@@ -1,6 +1,6 @@
 import pickle
 import pandas as pd
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 
 app = Flask(__name__)
 
@@ -26,6 +26,10 @@ def predict():
     formatted_prediction = f"The predicted CO2 emission is {round(float(prediction[0]), 2)} g/km"
 
     return render_template("result.html", prediction=formatted_prediction)
+
+@app.route("/health")
+def health():
+    return jsonify({"status": "healthy"}), 200
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
