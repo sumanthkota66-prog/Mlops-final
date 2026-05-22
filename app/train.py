@@ -7,8 +7,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 
-# Load dataset
-df = pd.read_csv("Car_CO2.csv")
+BASE_DIR = Path(__file__).resolve().parent
+
+df = pd.read_csv(BASE_DIR / "Car_CO2.csv")
 
 # Features (X) and Target (y)
 X = df[["volume", "weight", "cylinders", "fuel_type"]]
