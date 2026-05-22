@@ -14,7 +14,10 @@ jobs:
         with:
           python-version: '3.9'
       - name: Install dependencies
-        run: pip install -r app/requirements.txt
+        run: |
+          pip install -r app/requirements.txt
+          pip install pytest
+
       - name: Run Unit Tests
         env:
           PYTHONPATH: .
