@@ -37,7 +37,18 @@ jobs:
       - name: BuildImage
         run: |
           cd app
-          docker build . -t ${{secrets.DOCKER_HUB_USERNAME}}/studentperformance:latest
+          docker build . -t ${{secrets.DOCKER_HUB_USERNAME}}/car-co2-prediction:latest
 
       - name: PushToHub
-        run: docker push ${{secrets.DOCKER_HUB_USERNAME}}/studentperformance:latest 
+        run: docker push ${{secrets.DOCKER_HUB_USERNAME}}/car-co2-predicition:latest
+
+      - name: Deploy via Kind
+        run: |
+          curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64
+          chmod +x ./kind
+          ./kind create cluster
+
+          ./kind load docker-image ${{ secrets.DOCKER_HUB_USERNAME }}/car-co2-prediciton:latest
+
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml 
