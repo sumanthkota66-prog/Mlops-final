@@ -37,10 +37,10 @@ jobs:
       - name: BuildImage
         run: |
           cd app
-          docker build . -t ${{secrets.DOCKER_HUB_USERNAME}}/car-co2-prediction:latest
+          docker build . -t ${{secrets.DOCKER_HUB_USERNAME}}/car-co21:latest
 
       - name: PushToHub
-        run: docker push ${{secrets.DOCKER_HUB_USERNAME}}/car-co2-predicition:latest
+        run: docker push ${{secrets.DOCKER_HUB_USERNAME}}/car-co21:latest
 
       - name: Deploy via Kind
         run: |
@@ -48,7 +48,7 @@ jobs:
           chmod +x ./kind
           ./kind create cluster
 
-          ./kind load docker-image ${{ secrets.DOCKER_HUB_USERNAME }}/car-co2-prediciton:latest
+          ./kind load docker-image ${{ secrets.DOCKER_HUB_USERNAME }}/car-co21:latest
 
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml 
